@@ -4,6 +4,23 @@
 
 <?php
 
+  $KOSUL = array();
+
+  $KOSUL[] = "1";
+
+  if( isset($_GET["kategori"]) ) {
+    $KOSUL[] = " kategori_id = '{$_GET["kategori"]}' ";
+  }
+
+  if( $_SESSION["giris_yapti"] <> 1 ) {
+    $KOSUL[] = " durum = 1 ";
+  }
+
+  $SQL_KOSULU = "";
+  if(count($KOSUL) > 0) {
+    $SQL_KOSULU = implode(" AND ", $KOSUL);
+  }
+
   $SQL = "SELECT
             yazi_id,
             baslik,
@@ -17,6 +34,8 @@
             begeni,
             sayac
           FROM yazilar
+          WHERE
+            $SQL_KOSULU
           ORDER BY yazildigi_tarih DESC";
 
     // SQL komutunu MySQL veritabanı üzerinde çalıştır!

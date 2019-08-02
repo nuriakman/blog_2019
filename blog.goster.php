@@ -26,16 +26,25 @@
      <div class="row">
         <div class="col-md-12">
 
-            <div class="jumbotron">
-              <h1 class="display-5"><?php echo $row["baslik"];?></h1>
-              <p class="lead"><?php echo $row["yazi_spotu"];?></p>
-            </div>
+          <div class="alert alert-dark" role="alert">
+
+          <?php
+            if( $_SESSION["giris_yapti"] == 1 AND ($_SESSION["yazar_id"] == $row["yazar_id"] OR $_SESSION["yetki_seviyesi"] == 2) ) {
+              echo "<a href='?edityaziid={$row["yazi_id"]}'>Bu Makaleyi Düzenle</a>";
+            }
+          ?>
+
+
+            <h1 class="display-5"><?php echo $row["baslik"];?></h1>
+            <p class="lead"><?php echo $row["yazi_spotu"];?></p>
+          </div>
 
         </div>
       </div>
 
       <div class="row">
        <div class="col-md-12">
+              <img src="/sebzeler/<?php echo $row["yazi_id"];?>.png" class="img-thumbnail m-1 rounded float-left" />
              <?php echo nl2br( $row["yazi"] ); ?>
        </div> <!-- MakaleSonu -->
      </div> <!-- col -->
