@@ -20,7 +20,23 @@
     // SQL komutunu MySQL veritabanı üzerinde çalıştır!
     $rows  = mysqli_query($db, $SQL);
     $row   = mysqli_fetch_assoc($rows);    // Makale içeriğinin ekrana yazdırılması
+
+    $KayitSayisi = mysqli_num_rows($rows);
+    if ($KayitSayisi == 0) {
+      // Böyle bir makale yok! Ana sayfaya gönderelim
+      header("location: index.php");
+      die();
+    }
+
+    // Sayfa gösterim sayacının arttırılmasını yapalım
+    $SQL = "UPDATE yazilar SET sayac = sayac + 1 WHERE yazi_id = '{$_GET["yaziid"]}'";
+    mysqli_query($db, $SQL);
+
   ?>
+<script>
+  // Sayfa başlığını Blog Adına göre düzenleyelim.
+  document.title = "<?php echo $row["baslik"] . "::" . $GENEL_SiteAdi; ?>"; // Sayfa Başlığı
+</script>
 
   <div class="container mt-4">
      <div class="row">
@@ -51,6 +67,7 @@
                 // Slimdown.php KAYNAK: https://gist.github.com/jbroadway/2836900
                 require_once ('Slimdown.php');
                 echo Slimdown::render ( $row["yazi"] );
+                echo "<br><br><p>Bu yazı {$row["sayac"]} defa okunmuştur</p>";
              ?>
        </div> <!-- MakaleSonu -->
      </div> <!-- col -->
