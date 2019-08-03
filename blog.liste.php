@@ -4,15 +4,58 @@
 
 <?php
 
+################## Süzmeye göre başlık hazırlayalım
+################## Süzmeye göre başlık hazırlayalım
+  $SAYFA_BASLIGI = "";
+  if(isset($_GET["kategori"])) {
+    // Listele sayfası bağlığı için Kategori adını çekelim ki
+    $SQL = "SELECT * FROM kategoriler WHERE kategori_id = '{$_GET["kategori"]}' ";
+    // SQL komutunu MySQL veritabanı üzerinde çalıştır!
+    $rows  = mysqli_query($db, $SQL);
+    // Gelen satırı okuyalım
+    $row = mysqli_fetch_assoc($rows);
+    // Kategori adını değişkenimize alalım
+    $SAYFA_BASLIGI = "Kategori : " . $row["kategori_adi"];
+  }
+
+  if(isset($_GET["yazar"])) {
+    // Listele sayfası bağlığı için Kategori adını çekelim ki
+    $SQL = "SELECT * FROM yazarlar WHERE yazar_id = '{$_GET["yazar"]}' ";
+    // SQL komutunu MySQL veritabanı üzerinde çalıştır!
+    $rows  = mysqli_query($db, $SQL);
+    // Gelen satırı okuyalım
+    $row = mysqli_fetch_assoc($rows);
+    // Yazar adını değişkenimize alalım
+    $SAYFA_BASLIGI = "Yazar : " . $row["yazar_adi"];
+  }
+
+  if($SAYFA_BASLIGI <> "") {
+    echo "
+      <div class='col-md-12'>
+        <div class='alert alert-danger' role='alert'>
+            <h1>$SAYFA_BASLIGI</h1>
+        </div>
+      </div>       ";
+  }
+
+
+
+################## SQL'in KOŞUL BÖLÜMÜNÜ HAZIRLAYALIM
+################## SQL'in KOŞUL BÖLÜMÜNÜ HAZIRLAYALIM
+
   $KOSUL = array();
 
   $KOSUL[] = "1";
 
-  if( isset($_GET["kategori"]) ) {
+  if( isset($_GET["yazar"]) ) { // Yazar adına göre süz
+    $KOSUL[] = " yazar_id = '{$_GET["yazar"]}' ";
+  }
+
+  if( isset($_GET["kategori"]) ) { // Kategoriye göre süz
     $KOSUL[] = " kategori_id = '{$_GET["kategori"]}' ";
   }
 
-  if( $_SESSION["giris_yapti"] <> 1 ) {
+  if( $_SESSION["giris_yapti"] <> 1 ) { // Login olmuşsa Yazı Durumu BEKELEME'de olanları da listele
     $KOSUL[] = " durum = 1 ";
   }
 
@@ -54,8 +97,15 @@
            </p>
            <div class="d-flex justify-content-between align-items-center">
              <div class="btn-group">
-               <a class="btn btn-sm btn-outline-secondary" href="index.php?yaziid=<?php echo $row["yazi_id"];?>">Oku</a>
-          <!--     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+               <a class="btn btn-sm btn-outline-secondary" href="index.php?yaziid=<?php echo $row["yazi_id"];?>">Devamını Oku...</a>
+
+               <?php
+                 if( $_SESSION["giris_yapti"] == 1 AND ($_SESSION["yazar_id"] == $row["yazar_id"] OR $_SESSION["yetki_seviyesi"] == 2) ) {
+                   echo "<a class='btn btn-sm btn-outline-secondary' href='?edityaziid={$row["yazi_id"]}'>Düzenle</a>";
+                 }
+               ?>
+
+
              </div>
           <!--   <small class="text-muted">9 mins</small>  -->
            </div>
@@ -68,22 +118,3 @@
 
    </div> <!-- row -->
  </div> <!-- container -->
-
-
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
