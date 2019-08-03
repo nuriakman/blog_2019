@@ -55,8 +55,18 @@
     $KOSUL[] = " kategori_id = '{$_GET["kategori"]}' ";
   }
 
-  if( $_SESSION["giris_yapti"] <> 1 ) { // Login olmuşsa Yazı Durumu BEKELEME'de olanları da listele
+  if( $_SESSION["giris_yapti"] == 1 ) {
+    // Login olanlara için uygulanacak ilave kriterler
+    //
+    //
+  } else {
+    // Yazar login olmamışsa yayinlanacagi_tarih kriteri de çalışmalı
+    $BUGUN = date("Y-m-d");
+    $KOSUL[] = " yayinlanacagi_tarih <= '$BUGUN' ";
+
+    // Yazar login olmamışsa Yazı Durumu BEKLEMEDE olanları da listele
     $KOSUL[] = " durum = 1 ";
+
   }
 
   $SQL_KOSULU = "";
