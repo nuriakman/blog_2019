@@ -1,5 +1,8 @@
 <?php
 
+  ########### Kategoriler menüsü için ön hazırlık
+  ########### Kategoriler menüsü için ön hazırlık
+
   // Kategori adlarını alalım...
   $SQL = "SELECT kategori_id, kategori_adi FROM kategoriler ORDER BY siralama";
 
@@ -10,6 +13,23 @@
   $Kategoriler = "";
   while($row = mysqli_fetch_assoc($rows)) { // Kayıt adedince döner
       $Kategoriler .= "<a class='dropdown-item' href='index.php?kategori={$row["kategori_id"]}'>{$row["kategori_adi"]}</a>";
+  }
+
+
+
+  ########### Yazarlar menüsü için ön hazırlık
+  ########### Yazarlar menüsü için ön hazırlık
+
+  // Yazar adlarını alalım...
+  $SQL = "SELECT yazar_id, yazar_adi FROM yazarlar ORDER BY siralama";
+
+  // SQL komutunu MySQL veritabanı üzerinde çalıştır!
+  $rows  = mysqli_query($db, $SQL);
+
+  // Linkleri hazırlayalım
+  $Yazarlar = "";
+  while($row = mysqli_fetch_assoc($rows)) { // Kayıt adedince döner
+      $Yazarlar .= "<a class='dropdown-item' href='index.php?yazar={$row["yazar_id"]}'>{$row["yazar_adi"]}</a>";
   }
 
 
@@ -27,12 +47,24 @@
       <li class="nav-item active">
         <a class="nav-link" href="index.php">Ana Sayfa <span class="sr-only">(current)</span></a>
       </li>
+
+      <!-- Kategori Başlıklarını Listeleyelim-->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Kategoriler
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php echo $Kategoriler; ?>
+        </div>
+      </li>
+
+      <!-- Yazara Göre Listeleme İçin Yazar Adlarını Listeleyelim-->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Yazarlar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <?php echo $Yazarlar; ?>
         </div>
       </li>
 
