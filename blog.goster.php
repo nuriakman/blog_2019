@@ -45,7 +45,13 @@
       <div class="row">
        <div class="col-md-12">
               <img src="/sebzeler/<?php echo $row["yazi_id"];?>.png" class="img-thumbnail m-1 rounded float-left" />
-             <?php echo nl2br( $row["yazi"] ); ?>
+             <?php
+                // Makaleler MarkDown ile yazılıyor.
+                // Temel MarkDown'u kolayca render edebilmek için "Slimdown" kütüphanesi kullanıldı
+                // Slimdown.php KAYNAK: https://gist.github.com/jbroadway/2836900
+                require_once ('Slimdown.php');
+                echo Slimdown::render ( $row["yazi"] );
+             ?>
        </div> <!-- MakaleSonu -->
      </div> <!-- col -->
 </div>
