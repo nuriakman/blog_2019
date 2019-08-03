@@ -8,6 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <title>Blog 2019</title>
+    <title><?php echo $GENEL_SiteAdi; ?></title>
   </head>
   <body>

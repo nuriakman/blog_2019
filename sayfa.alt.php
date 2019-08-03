@@ -1,7 +1,7 @@
 
-<div class="alert alert-secondary mt-5 text-right" role="alert">
-  Özgür Yazılım yaz Kampı, <b>Blog 2019</b> Projesi
-</div>
+  <div class="alert alert-secondary mt-5 text-right" role="alert">
+    <?php echo $GENEL_SayfaSonuMetni; ?>
+  </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
