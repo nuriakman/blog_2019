@@ -7,11 +7,13 @@
     die();
   }
 
-  require("db.php");
+  require("ayarlar.php"); // Site genelini ilgilendiren ayarlara ilişkin değişkenler
 
-  require("sayfa.ust.php");
+  require("db.php"); // Veritabanına bağlantı kuralım
 
-  require("sayfa.navbar.php");
+  require("sayfa.ust.php"); // Sayfanın üst kısmını oluşturan HTML kodlar
+
+  require("sayfa.navbar.php");  // Sayfanın Navigasyon Barını oluşturan HTML kodlar
 
   $SayfaGosterildi = 0;
 
@@ -57,7 +59,7 @@
   }
 
 
-  require("sayfa.alt.php");
+  require("sayfa.alt.php");  // Sayfanın alt kısmını oluşturan HTML kodlar
 
 print_r($_SESSION);
 
