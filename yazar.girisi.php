@@ -1,11 +1,14 @@
 <?php
   if(isset($_POST["eposta"])) { // Form gönderilmiş.
 
+    // NOT: Yazar YASAKLI ise giriş yapamaz.
     $SQL = "SELECT * FROM yazarlar
               WHERE
-                  yazar_eposta = '{$_POST["eposta"]}' AND
-                  parola       = '{$_POST["parola"]}'
+                  yazar_eposta  = '{$_POST["eposta"]}' AND
+                  parola        = '{$_POST["parola"]}' AND
+                  yazar_yasakli = 0
             ";
+
       // SQL komutunu MySQL veritabanı üzerinde çalıştır!
       $rows  = mysqli_query($db, $SQL);
 
@@ -25,6 +28,7 @@
         $_SESSION["yazar_id"]       = $row["yazar_id"];
         $_SESSION["yazar_adi"]      = $row["yazar_adi"];
         $_SESSION["yetki_seviyesi"] = $row["yetki_seviyesi"];
+        $_SESSION["yazar_yasakli"]  = $row["yazar_yasakli"];
         $_SESSION["giris_yapti"]    = 1;
         $GirisHatali = 0; // 0: Hata yok
 
