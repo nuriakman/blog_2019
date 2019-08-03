@@ -1,5 +1,20 @@
 <?php
 
+if( $_SESSION["giris_yapti"] <> 1 ) {
+  // Kullanıcı giriş yapmamış !
+  // Ana sayfaya yönlendirelim
+  header("location index.php");
+  die();
+}
+
+if( $_SESSION["yetki_seviyesi"] <> 2 ) {
+  // Kullanıcı giriş yapmış, ancak yetkili değil!
+  // Ana sayfaya yönlendirelim
+  header("location index.php");
+  die();
+}
+
+
   if( isset($_POST["yeni_yazar_id"]) ) { // Form gönderilmişse başlayalım
 
     // echo "<pre>";  print_r($_POST);  echo "</pre>"; die();

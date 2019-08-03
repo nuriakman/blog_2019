@@ -61,6 +61,6 @@
 
   require("sayfa.alt.php");  // Sayfanın alt kısmını oluşturan HTML kodlar
 
-print_r($_SESSION);
+  // print_r($_SESSION); // Session değişkenlerinin içini görelim...
 
 ?>

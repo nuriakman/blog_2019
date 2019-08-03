@@ -1,5 +1,12 @@
 <?php
 
+if( $_SESSION["giris_yapti"] <> 1 ) {
+  // Kullanıcı giriş yapmamış !
+  // Ana sayfaya yönlendirelim
+  header("location index.php");
+  die();
+}
+
   if( isset($_POST["baslik"]) ) { // Yeni yazı formu gönderilmiş. Kaydedelim...
 
       // Eksik veri girişi kontrolü
