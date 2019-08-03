@@ -25,6 +25,11 @@
     $SayfaGosterildi=1;
   }
 
+  if(isset($_GET["yazaryonetimi"])) { // Yazar Yönetimi
+    require("yazar.yonetimi.php");
+    $SayfaGosterildi=1;
+  }
+
   if(isset($_GET["yeniyaziekle"])) { // Yeni yazı ekleme ekranı
     require("yeni.yazi.ekle.php");
     $SayfaGosterildi=1;

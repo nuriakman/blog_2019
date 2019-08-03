@@ -86,6 +86,13 @@
               Merhaba, <?php echo $_SESSION["yazar_adi"];?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <?php
+                  if( $_SESSION["yetki_seviyesi"] == 2) { // Sistemde yetkili kişinin göreceği ekranlar
+                    echo "<a class='dropdown-item' href='index.php?yazaryonetimi=1'>Yazar Yönetimi</a>";
+                  }
+              ?>
+
+
               <a class='dropdown-item' href='index.php?yeniyaziekle=1'>Yazı Ekle</a>
               <a class='dropdown-item' href='index.php?oturumukapat=1'>Oturumu Kapat</a>
             </div>
