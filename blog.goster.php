@@ -28,6 +28,22 @@
       die();
     }
 
+    if( $_SESSION["giris_yapti"] <> 1) { // Site ziyaretçisi (Login olmuş yazar değil!)
+
+        if ($row["durum"] == 0) { // Yazı BEKLEMEDE olarak ayarlanmış. Göstermeyelim.
+          // Böyle bir makale yok! Ana sayfaya gönderelim
+          header("location: index.php");
+          die();
+        }
+
+        if ($row["yayinlanacagi_tarih"] > date("Y-m-d")) { // Yazı, ileri bir tarihte gösterilecek biçimde ayarlanmış.
+          // Böyle bir makale yok! Ana sayfaya gönderelim
+          header("location: index.php");
+          die();
+        }
+
+    }
+
     // Sayfa gösterim sayacının arttırılmasını yapalım
     $SQL = "UPDATE yazilar SET sayac = sayac + 1 WHERE yazi_id = '{$_GET["yaziid"]}'";
     mysqli_query($db, $SQL);
