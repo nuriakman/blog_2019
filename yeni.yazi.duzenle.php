@@ -1,5 +1,6 @@
 <?php
-  if( isset($_POST["baslik"]) ) { // Yeni yazı formu gömnderilmiş. Kaydedelim...
+
+  if( isset($_POST["baslik"]) ) { // Yeni yazı formu gönderilmiş. Kaydedelim...
 
       // Eksik veri girişi kontrolü
       if($_POST["baslik"] == "" OR
@@ -48,6 +49,8 @@
   }
 
 
+  ############## Katori Combo'sunu hazırlayalım
+  ############## Katori Combo'sunu hazırlayalım
 
   // Kategori adlarını alalım...
   $SQL = "SELECT kategori_id, kategori_adi FROM kategoriler ORDER BY siralama";
@@ -64,6 +67,7 @@
 
 
   #################### Düzenlenmesi istenilen kaydı çekelim
+  #################### Düzenlenmesi istenilen kaydı çekelim
     $SQL = "SELECT * FROM yazilar WHERE yazi_id = '{$_GET["edityaziid"]}' ";
 
     // SQL komutunu MySQL veritabanı üzerinde çalıştır!
@@ -71,6 +75,15 @@
 
     // Gelen satırı alalım
     $row = mysqli_fetch_assoc($rows);
+
+    #################### KİŞİ BU YAZIYI DÜZENLEMEYE YETKİLİ Mİ?
+    if( $_SESSION["giris_yapti"] == 1 AND ($_SESSION["yazar_id"] == $row["yazar_id"] OR $_SESSION["yetki_seviyesi"] == 2) ) {
+      // Bu yazıyı düzenlemeye yetkili
+    } else {
+      // Bu yazıyı düzenleme yetkisi yok. Makale oku sayfasına yönlendirelim
+      header("location: index.php?yaziid={$row["yazi_id"]}");
+      die();
+    }
 
 
 
